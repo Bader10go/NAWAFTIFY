@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nawaftify</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffb02e'/%3E%3Cstop offset='1' stop-color='%23ff6a3d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='19' fill='url(%23g)'/%3E%3Crect x='16' y='9' width='8' height='14' rx='4' fill='%23000'/%3E%3Cpath d='M12.5 19.5a7.5 7.5 0 0 0 15 0M20 27v4M16 31h8' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#000; --base:#121212; --elev:#1f1f1f; --elev2:#2a2a2a; --hl:#2a2a2a; --press:#000;
@@ -14,7 +15,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{background:var(--bg);color:var(--text);font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:14px;overflow:hidden;-webkit-font-smoothing:antialiased;user-select:none}
+body{background:var(--bg);color:var(--text);font-family:"Figtree","Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:14px;overflow:hidden;-webkit-font-smoothing:antialiased;user-select:none}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 input{font:inherit;color:inherit}
 svg{display:block}
@@ -72,6 +73,11 @@ a{color:inherit;text-decoration:none}
 /* ===== Covers ===== */
 .cv{position:relative;overflow:hidden;display:grid;place-items:center;color:rgba(255,255,255,.92);font-weight:900;letter-spacing:-.5px;text-shadow:0 2px 12px rgba(0,0,0,.35);background:#333;box-shadow:0 4px 24px rgba(0,0,0,.35)}
 .cv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cv.art{container-type:inline-size;place-items:stretch;text-shadow:none}
+.cv.art .ak{position:absolute;top:8cqw;left:8cqw;font-size:7cqw;font-weight:800;letter-spacing:.18em;color:rgba(255,255,255,.85)}
+.cv.art .at{position:absolute;left:8cqw;right:8cqw;bottom:7cqw;font-size:12cqw;font-weight:900;line-height:.95;letter-spacing:-.03em;color:#fff;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;word-break:break-word;text-shadow:0 2px 16px rgba(0,0,0,.25)}
+.cv.art .ar{position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 2px,transparent 2px 14px);mix-blend-mode:overlay}
+@container (max-width:72px){.cv.art .ak,.cv.art .at{display:none}}
 .cv svg{width:42%;height:42%;fill:#fff;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3))}
 
 /* ===== Main ===== */
@@ -165,10 +171,10 @@ a{color:inherit;text-decoration:none}
 
 /* Track table */
 .tracks{padding:0 24px 32px;position:relative}
-.thead,.tr{display:grid;grid-template-columns:16px minmax(120px,6fr) minmax(100px,4fr) minmax(100px,3fr) minmax(100px,2fr) minmax(110px,1fr);gap:16px;align-items:center;padding:0 16px}
-.tracks.noalbum .thead,.tracks.noalbum .tr{grid-template-columns:16px minmax(120px,6fr) minmax(100px,4fr) minmax(100px,2fr) minmax(110px,1fr)}
-.tracks.noalbum .c-album{display:none}
-.tracks.nodate .c-date{visibility:hidden}
+.thead,.tr{display:grid;grid-template-columns:16px minmax(140px,4fr) minmax(120px,3fr) minmax(110px,2fr) minmax(120px,1fr);gap:16px;align-items:center;padding:0 16px}
+.tracks.cols-a .thead,.tracks.cols-a .tr{grid-template-columns:16px minmax(140px,4fr) minmax(120px,2fr) minmax(120px,1fr)}
+.tracks.cols-0 .thead,.tracks.cols-0 .tr{grid-template-columns:16px minmax(140px,4fr) minmax(120px,1fr)}
+.tr.noart .cv{display:none}
 .thead{height:36px;border-bottom:1px solid var(--line);color:var(--sub);font-size:14px;margin-bottom:16px;position:sticky;top:64px;z-index:4;background:var(--base);margin-left:-24px;margin-right:-24px;padding-left:40px;padding-right:40px}
 .thead.stuck{background:#1a1a1a;border-color:transparent;box-shadow:0 1px 0 var(--line)}
 .thead span{cursor:pointer;white-space:nowrap}
@@ -187,10 +193,12 @@ a{color:inherit;text-decoration:none}
 .tr .n .pi svg{width:16px;fill:var(--text)}
 .tr .tc{display:flex;align-items:center;gap:12px;min-width:0}
 .tr .cv{width:40px;height:40px;border-radius:4px;flex:none;font-size:14px;box-shadow:none}
-.tr .tn{color:var(--text);font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr .tn{color:var(--text);font-size:16px;font-weight:500;letter-spacing:-.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tr.cur .tn{color:var(--accent)}
 .tr .ta,.tr .c{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tr:hover .ta,.tr:hover .c-orig,.tr:hover .c-album{color:var(--text)}
+.tr:hover .ta .link,.tr:hover .c-album{color:var(--text)}
+.tr .ta .cov{color:var(--dim)}
+.tr .c-date{font-size:14px}
 .tr .end{display:flex;justify-content:flex-end;align-items:center;gap:16px}
 .tr .lk{opacity:0;color:var(--sub)}
 .tr .lk svg{width:16px;fill:currentColor}
@@ -537,20 +545,23 @@ function ctxInfo(key){
   if(key==="top")return{key,kind:"Playlist",name:"Your Top Songs",bg:"linear-gradient(135deg,#e0335a,#6b1240)",icon:"recap",hc:"#8c1e45",desc:"The "+ARTIST+" songs you can't stop playing."};
   if(key==="new")return{key,kind:"Playlist",name:"Fresh Drops",bg:"linear-gradient(135deg,#2f80ed,#1a2a6c)",icon:"note",hc:"#24508f",desc:"The newest recordings, straight from the studio (the shower)."};
   if(key.startsWith("mix:")){const n=+key.slice(4);const cols=[["#ff6a3d","#7a1f00"],["#2bb3a3","#0a3b40"],["#b44de8","#3a0d5c"],["#e8c547","#5e4500"]][n%4];return{key,kind:"Playlist",name:"Daily Mix "+(n+1),bg:`linear-gradient(135deg,${cols[0]},${cols[1]})`,icon:"mic",hc:cols[1],mix:n,desc:"A fresh mix of "+ARTIST+", made for you. Updated daily."}}
-  if(key.startsWith("album:")){const a=key.slice(6);return{key,kind:"Album",name:a,bg:grad("album"+a),img:covers[a]||null,label:initials(a),hc:`hsl(${hue("album"+a)} 45% 32%)`}}
-  if(key.startsWith("pl:")){const p=playlists.find(x=>x.id===key.slice(3));if(!p)return null;const first=p.ids.map(i=>byId[i]).filter(Boolean);return{key,kind:"Playlist",name:p.name,desc:p.desc,bg:grad("pl"+p.id),label:initials(p.name),img:first[0]?.img||null,icon:p.ids.length?null:"note",hc:`hsl(${hue("pl"+p.id)} 40% 30%)`,pl:p,mosaic:first.length>=4?first.slice(0,4):null}}
+  if(key.startsWith("album:")){const a=key.slice(6);return{key,kind:"Album",name:a,bg:grad("album"+a),img:covers[a]||null,art:a,seed:"album"+a,hc:`hsl(${hue("album"+a)} 45% 32%)`}}
+  if(key.startsWith("pl:")){const p=playlists.find(x=>x.id===key.slice(3));if(!p)return null;const first=p.ids.map(i=>byId[i]).filter(Boolean);return{key,kind:"Playlist",name:p.name,desc:p.desc,bg:grad("pl"+p.id),art:p.name,seed:"pl"+p.id,img:first[0]?.img||null,icon:p.ids.length?null:"note",hc:`hsl(${hue("pl"+p.id)} 40% 30%)`,pl:p,mosaic:first.length>=4?first.slice(0,4):null}}
   if(key==="artist")return{key,kind:"Artist",name:ARTIST,bg:"linear-gradient(135deg,#ffb02e,#ff5e3a)",label:initials(ARTIST),hc:"#7a3a10"};
   return null;
 }
+function artBg(seed){const h=hue(seed),h2=(h+55)%360,h3=(h+190)%360,x=20+hash(seed+"x")%60,y=15+hash(seed+"y")%50;
+  return`radial-gradient(circle at ${x}% ${y}%,hsl(${h} 85% 66%) 0,transparent 55%),radial-gradient(circle at ${100-x}% ${100-y/2}%,hsl(${h2} 80% 50%) 0,transparent 60%),radial-gradient(circle at 10% 95%,hsl(${h3} 70% 40%) 0,transparent 45%),linear-gradient(160deg,hsl(${h} 45% 28%),hsl(${h2} 55% 12%))`}
 function cover(c,cls="",extra=""){
   if(!c)return`<div class="cv ${cls}" ${extra}></div>`;
   if(c.mosaic&&!c.img){return`<div class="cv ${cls}" ${extra} style="display:grid;grid-template-columns:1fr 1fr;padding:0;place-items:stretch">${c.mosaic.map(s=>`<div style="background:${s.img?`url(${s.img}) center/cover`:grad(s.album+s.id)}"></div>`).join("")}</div>`}
+  if(!c.img&&!c.icon&&c.art)return`<div class="cv art ${cls}" ${extra} style="background:${artBg(c.seed||c.art)}"><span class="ar"></span><span class="ak">${esc(ARTIST.toUpperCase())}</span><span class="at">${esc(c.art)}</span></div>`;
   return`<div class="cv ${cls}" ${extra} style="background:${c.bg}">${c.img?`<img src="${c.img}" alt="" loading="lazy">`:c.icon?I(c.icon):`<span>${esc(c.label||"")}</span>`}</div>`;
 }
 function songCover(s,cls="",extra=""){
   if(!s)return cover(null,cls,extra);
   const img=s.img||covers[s.album]||null;
-  return cover({bg:grad(s.album+s.id),img,label:initials(s.title)},cls,extra);
+  return cover({bg:grad(s.album+s.id),img,art:s.title,seed:s.album+s.id},cls,extra);
 }
 function listFor(key){
   if(key==="all")return songs;
@@ -853,7 +864,7 @@ function listPage(key){
   const showDate=isPl||isLiked;
   const srt=listSort[key]||{by:"custom",dir:1};
   const arrow=b=>srt.by===b?`<span style="color:var(--accent);margin-left:4px">${srt.dir>0?"▲":"▼"}</span>`:"";
-  const head=`<div class="thead" id="thead"><span data-sort="custom">#</span><span data-sort="title">Title${arrow("title")}</span><span data-sort="orig" class="c-orig2">Originally by${arrow("orig")}</span>${showAlbum?`<span data-sort="album" class="c-album">Album${arrow("album")}</span>`:""}<span data-sort="added" class="c-date">${showDate?"Date added"+arrow("added"):""}</span><span class="r" data-sort="dur" data-tip="Duration">${I("clock")}${arrow("dur")}</span></div>`;
+  const head=`<div class="thead" id="thead"><span data-sort="custom" style="text-align:right">#</span><span data-sort="title">Title${arrow("title")}</span>${showAlbum?`<span data-sort="album" class="c-album">Album${arrow("album")}</span>`:""}${showDate?`<span data-sort="added" class="c-date">Date added${arrow("added")}</span>`:""}<span class="r" data-sort="dur" data-tip="Duration">${I("clock")}${arrow("dur")}</span></div>`;
   const body=rows.length?rows.map((s,i)=>trackRow(s,i+1,key,{album:showAlbum,date:showDate?addedTs(key,s):null})).join(""):
     listFilter?`<div class="emptyl"><p>Couldn't find "${esc(listFilter)}"</p></div>`:
     isLiked?`<div class="emptyl">${I("heartO").replace("<svg",'<svg class="big"')}<h3>Songs you like will appear here</h3><p>Save songs by tapping the heart icon.</p><button class="pillbtn" data-act="search">Find songs</button></div>`:
@@ -868,7 +879,7 @@ function listPage(key){
     ${isPl||isLiked?"":`<button class="ib sm" data-act="likeall" data-key="${esc(key)}" data-tip="Like all songs">${I(list.length&&list.every(s=>liked[s.id])?"check":"heartO")}</button>`}
     <button class="ib sm" data-ctxmenu="${esc(key)}" data-tip="More options for ${esc(c.name)}">${I("dots")}</button>
     <div class="listtools"><div class="inlinesearch ${listFilter?"open":""}" id="lsearch">${I("search")}<input id="listQ" placeholder="Search in ${c.kind.toLowerCase()}" value="${esc(listFilter)}"></div><button class="sortbtn" data-act="listsort" data-key="${esc(key)}">${srt.by==="custom"?"Custom order":{title:"Title",orig:"Originally by",album:"Album",dur:"Duration",added:"Date added"}[srt.by]} ${I(settings.compact?"compact":"list").replace("<svg",'<svg style="width:16px;fill:currentColor"')}</button></div></div>
-   <div class="tracks ${settings.compact?"compact":""} ${showAlbum?"":"noalbum"} ${showDate?"":"nodate"}">${rows.length?head:""}${body}</div>
+   <div class="tracks ${settings.compact?"compact":""} ${showAlbum&&showDate?"":showAlbum?"cols-a":"cols-0"}">${rows.length?head:""}${body}</div>
    ${key.startsWith("album:")&&list.length?`<div style="padding:0 40px 40px;color:var(--sub);font-size:14px"><div>${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric",year:"numeric"})}</div><div style="font-size:11px;margin-top:6px">℗ ${new Date().getFullYear()} ${ARTIST} Records (a bedroom)</div></div>`:""}
    ${key==="artist"?artistExtra():""}
    </div></div>`;
@@ -882,12 +893,11 @@ function trackRow(s,n,key,o={}){
   const cur=Q.cur===s.id,pl=cur&&isPlaying();
   const numCell=pl?`<span class="eq"><i></i><i></i><i></i><i></i></span>`:`<span class="nt" ${cur?'style="color:var(--accent)"':""}>${n}</span>`;
   if(o.search)return`<div class="tr ${cur?"cur":""}" data-row="${esc(s.id)}" data-ctxkey="${esc(key)}" data-song="${esc(s.id)}"><div class="tc">${songCover(s)}<div style="min-width:0"><div class="tn">${esc(s.title)}</div><div class="ta">${s.orig?"cover of "+esc(s.orig):ARTIST}</div></div></div><div class="end"><button class="lk ${liked[s.id]?"on":""}" data-like="${esc(s.id)}" data-tip="${liked[s.id]?"Remove from":"Save to"} Liked Songs">${I(liked[s.id]?"check":"plus").replace("<svg",'<svg style="width:16px"')}</button><span class="dur">${fmt(s.dur)}</span><button class="mo" data-songmenu="${esc(s.id)}" data-ctxkey="${esc(key)}">${I("dots")}</button></div></div>`;
-  return`<div class="tr ${cur?"cur":""}" data-row="${esc(s.id)}" data-ctxkey="${esc(key)}" data-song="${esc(s.id)}">
+  return`<div class="tr ${cur?"cur":""} ${o.album===false&&key.startsWith("album:")?"noart":""}" data-row="${esc(s.id)}" data-ctxkey="${esc(key)}" data-song="${esc(s.id)}">
    <div class="n">${numCell}<span class="pi">${I(pl?"pause":"play")}</span></div>
-   <div class="tc">${songCover(s)}<div style="min-width:0"><div class="tn">${esc(s.title)}</div><div class="ta"><span class="link" data-open="artist">${ARTIST}</span></div></div></div>
-   <div class="c c-orig">${esc(s.orig||"—")}</div>
+   <div class="tc">${songCover(s)}<div style="min-width:0"><div class="tn">${esc(s.title)}</div><div class="ta"><span class="link" data-open="artist">${ARTIST}</span>${s.orig?`<span class="cov"> • cover of ${esc(s.orig)}</span>`:""}</div></div></div>
    ${o.album!==false?`<div class="c c-album"><span class="link" data-open="album:${esc(s.album)}">${esc(s.album)}</span></div>`:""}
-   <div class="c c-date">${o.date?ago(o.date):""}</div>
+   ${o.date!=null?`<div class="c c-date">${ago(o.date)}</div>`:""}
    <div class="end"><button class="lk ${liked[s.id]?"on":""}" data-like="${esc(s.id)}" data-tip="${liked[s.id]?"Remove from":"Save to"} Liked Songs">${I(liked[s.id]?"check":"plus").replace("<svg",'<svg style="width:16px"')}</button><span class="dur">${fmt(s.dur)}</span><button class="mo" data-songmenu="${esc(s.id)}" data-ctxkey="${esc(key)}" data-tip="More options for ${esc(s.title)}">${I("dots")}</button></div></div>`;
 }
 
