@@ -483,8 +483,10 @@ async function fetchList(){
   if(host.endsWith(".github.io")){
     const owner=host.split(".")[0],repo=location.pathname.split("/").filter(Boolean)[0]||host;
     try{
-      const r=await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/HEAD?recursive=1`,{cache:"no-store"});
-      if(r.ok){const j=await r.json();const paths=j.tree.filter(t=>t.type==="blob").map(t=>t.path);LS.set("paths",paths);return fromPaths(paths)}
+      const cached=LS.get("paths",null),etag=LS.get("etag",null);
+      const r=await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/HEAD?recursive=1`,{cache:"no-store",headers:cached&&etag?{"If-None-Match":etag}:{}});
+      if(r.status===304&&cached)return fromPaths(cached);
+      if(r.ok){const j=await r.json();const paths=j.tree.filter(t=>t.type==="blob").map(t=>t.path);LS.set("paths",paths);const et=r.headers.get("ETag");if(et)LS.set("etag",et);return fromPaths(paths)}
     }catch(e){}
     const cached=LS.get("paths",null);if(cached)return fromPaths(cached);
     throw new Error("offline");
@@ -1211,9 +1213,15 @@ async function boot(){
   else if(h.startsWith("#ctx=")&&ctxInfo(h.slice(5))){go({v:"list",key:h.slice(5)},true)}
   renderAll();probeDurations();
 }
-setInterval(async()=>{
+let checking=false,lastCheck=0;
+async function checkForSongs(){
+  if(checking||Date.now()-lastCheck<15000)return;checking=true;lastCheck=Date.now();
   try{const list=await fetchList();const prevIds=songs.map(s=>s.id).join("|");const newIds=list.map(s=>s.id).join("|");if(prevIds!==newIds){const isNew=applyList(list);if(isNew)toast("New songs from "+ARTIST+"! 🎤");renderAll();probeDurations()}}catch(e){}
-},10*60*1000);
+  checking=false;
+}
+setInterval(checkForSongs,30*1000);
+addEventListener("focus",checkForSongs);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkForSongs()});
 setInterval(()=>LS.set("session",{ctx:Q.ctxKey,cur:Q.cur,t:audio.currentTime}),5000);
 boot();
 </script>
