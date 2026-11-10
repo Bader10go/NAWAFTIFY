@@ -461,7 +461,7 @@ let route={v:"home"},hist=[{v:"home"}],hi=0;
 let listSort={},listFilter="",sleep={until:0,endOfTrack:false,timer:null};
 
 /* ================= DATA LOADING ================= */
-const AUDIO_EXT=/\.(mp3|m4a|wav|ogg|aac|flac|opus|webm)$/i, IMG_EXT=/\.(jpe?g|png|webp|gif)$/i;
+const AUDIO_EXT=/\.(mp3|m4a|wav|ogg|aac|flac|opus|webm|mp4|m4v|3gp)$/i, IMG_EXT=/\.(jpe?g|png|webp|gif)$/i;
 const enc=p=>p.split("/").map(encodeURIComponent).join("/");
 function fromPaths(paths){
   const imgs={};paths.filter(p=>p.startsWith("songs/")&&IMG_EXT.test(p)).forEach(p=>{imgs[p.replace(IMG_EXT,"").toLowerCase()]=enc(p)});
@@ -473,7 +473,8 @@ function fromPaths(paths){
     const dir=parts.slice(0,-1).join("/");
     const cov=imgs[(dir+"/cover").toLowerCase()]||imgs[(dir+"/folder").toLowerCase()]||null;
     if(cov)covers[album]=cov;
-    return{id:p,title:(k>-1?stem.slice(0,k):stem).replace(/_/g," ").trim(),orig:k>-1?stem.slice(k+3).trim():"",album,url:enc(p),img:imgs[p.replace(/\.[^.]+$/,"").toLowerCase()]||null,added:i};
+    let orig=k>-1?stem.slice(k+3).trim():"";if(orig.toLowerCase().includes(ARTIST.toLowerCase()))orig="";
+    return{id:p,title:(k>-1?stem.slice(0,k):stem).replace(/_/g," ").trim(),orig,album,url:enc(p),img:imgs[p.replace(/\.[^.]+$/,"").toLowerCase()]||null,added:i};
   });
   if(imgs["songs/cover"])covers[DEFAULT_ALBUM]=covers[DEFAULT_ALBUM]||imgs["songs/cover"];
   return list;
